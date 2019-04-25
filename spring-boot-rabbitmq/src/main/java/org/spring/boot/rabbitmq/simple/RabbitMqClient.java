@@ -1,7 +1,6 @@
-package org.spring.boot.rabbitmq.core;
+package org.spring.boot.rabbitmq.simple;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.spring.boot.rabbitmq.util.RabbitmqUtils;
@@ -20,6 +19,7 @@ public class RabbitMqClient {
 		try {
 			connection = RabbitmqUtils.getConnection();
 			final Channel channel = connection.createChannel();
+			
 			Consumer consumer = new DefaultConsumer(channel) {
 
 				@Override
@@ -27,12 +27,6 @@ public class RabbitMqClient {
 						byte[] body) throws IOException {
 					// TODO Auto-generated method stub
 					System.out.println("Receive message:" + new String(body));
-					try {
-						TimeUnit.SECONDS.sleep(2);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					channel.basicAck(envelope.getDeliveryTag(), true);
 				}
 				

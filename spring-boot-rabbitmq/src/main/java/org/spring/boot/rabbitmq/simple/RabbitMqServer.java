@@ -1,4 +1,4 @@
-package org.spring.boot.rabbitmq.core;
+package org.spring.boot.rabbitmq.simple;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -11,11 +11,8 @@ import com.rabbitmq.client.Connection;
 
 public class RabbitMqServer {
 
-	public static final String default_exchange_name = "hello_exchange";
 
 	public static final String default_queue_name = "hello_queue";
-
-	public static final String default_routing_key = "hello";
 
 	public static void main(String[] args) {
 		Connection connection = null;
@@ -23,12 +20,9 @@ public class RabbitMqServer {
 		try {
 			connection = RabbitmqUtils.getConnection();
 			channel = connection.createChannel();
-			channel.confirmSelect();
-			channel.exchangeDeclare(default_exchange_name, BuiltinExchangeType.DIRECT);
 			channel.queueDeclare(default_queue_name, false, false, true, null);
-			channel.queueBind(default_queue_name, default_exchange_name, default_routing_key);
 			String message = "hello word!";
-			channel.basicPublish(default_exchange_name, default_routing_key, null, message.getBytes());
+			channel.basicPublish("", default_queue_name, null, message.getBytes());
 		} catch (IOException | TimeoutException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

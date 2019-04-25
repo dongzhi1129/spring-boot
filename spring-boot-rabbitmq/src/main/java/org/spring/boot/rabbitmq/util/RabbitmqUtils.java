@@ -41,7 +41,9 @@ public class RabbitmqUtils {
 	public static void closeQuietly(final Closeable closeable) {
 
 		try {
-			closeable.close();
+			if (closeable != null) {
+				closeable.close();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,7 +53,9 @@ public class RabbitmqUtils {
 	public static void closeQuietly(final AutoCloseable closeable) {
 
 		try {
-			closeable.close();
+			if (closeable != null) {
+				closeable.close();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
