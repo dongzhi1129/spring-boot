@@ -51,6 +51,7 @@ public class UserContollerTest extends BaseTestController {
 	}
 
 	@Test
+	@Ignore
 	@Parameters(source = TestEditUserrProvider.class)
 	public void testEditUser(UserVo user, String locale) {
 		try {
@@ -66,13 +67,18 @@ public class UserContollerTest extends BaseTestController {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testI18nPlaceHold() {
+		System.out.println(i18n.getLoacleMessageWithPlaceHolder("module.error.object.must.not.be.empty","user","name"));
+	}
 
 	public static class TestAddUserProvider {
 
 		public static Object[] provideTestCase1() {
 			UserVo user = new UserVo();
-			user.setId(0l);
-			user.setName("dongzhi");
+			user.setId(1l);
+			user.setName("");
 			user.setPhoneNumber("18362978***");
 			user.setAddress("china");
 			user.setSex("male");

@@ -40,5 +40,12 @@ public class I18nComponent {
 		return message;
 
 	}
+	
+	public String getLoacleMessageWithPlaceHolder(String propertyKey,Object ... params) {
+		Locale locale = getLocale();
+		String message = bundleMessageSource.getMessage(propertyKey, params, locale);
+		return message;
+
+	}
 
 }

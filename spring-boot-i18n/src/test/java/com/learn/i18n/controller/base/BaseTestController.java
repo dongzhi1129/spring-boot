@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.learn.i18n.component.I18nComponent;
 
 import junitparams.JUnitParamsRunner;
 
@@ -27,6 +28,9 @@ public abstract class BaseTestController {
 	protected ObjectMapper objectMapper;
 
 	protected ObjectWriter objectWriter;
+	
+	@Autowired
+	protected I18nComponent i18n;
 
 	@Before
 	public void init() throws Exception {
