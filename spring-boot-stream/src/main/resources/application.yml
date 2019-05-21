@@ -1,0 +1,19 @@
+spring:
+  rabbitmq:
+    host: 192.168.199.118
+    port: 5672
+    username: dongzhi.wang
+    password: admin
+    virtual-host: /mall
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination:
+            test_topic
+        output:
+          destination:
+            test_topic
+            
+        
+     
