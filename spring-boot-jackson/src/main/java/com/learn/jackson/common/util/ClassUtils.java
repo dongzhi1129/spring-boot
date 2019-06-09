@@ -12,7 +12,7 @@ import com.learn.jackson.vo.UserInfo;
  * @Title: ClassUtils.java 
  * @Package com.learn.jackson.common.util 
  * @Description: TODO
- * @author Weidong.Wang
+ * @author dongzhi.Wang
  * @date Creation time: 2019年5月10日
  * @version V1.0   
  */
