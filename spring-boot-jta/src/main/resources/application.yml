@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    bill:
+      url: jdbc:mysql://192.168.199.118:53307/xa_bill?serverTimezone=GMT&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&useAffectedRows=true&useSSL=false
+      driver: com.mysql.jdbc.Driver
+      username: root
+      password: root
+      
+    repository:
+      url: jdbc:mysql://192.168.199.118:53308/xa_repository?serverTimezone=GMT&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&useAffectedRows=true&useSSL=false
+      driver: com.mysql.jdbc.Driver
+      username: root
+      password: root
+logging:
+  level: 
+     com.learn.jta.bill.mapper: debug
+     com.learn.jta.repository.mapper: debug
+    
+mybatis:
+  mapper-locations:
+  - classpath:com/learn/jta/bill/mapper/*.xml 
+  - classpath:com/learn/jta/repository/mapper/*.xml

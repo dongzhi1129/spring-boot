@@ -1,0 +1,1 @@
+{"id":"192.168.150.1.tm156027021192600001","wasCommitted":false,"participants":[{"uri":"192.168.150.1.tm1","state":"TERMINATED","expires":1560270224372,"resourceName":"BillDataSource"},{"uri":"192.168.150.1.tm2","state":"TERMINATED","expires":1560270224372,"resourceName":"RepositoryDataSource"}]}
