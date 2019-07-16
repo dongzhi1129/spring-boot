@@ -1,17 +1,13 @@
 package com.learn.cloud.authority.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +27,26 @@ import com.learn.cloud.authority.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/authority")
 @Slf4j
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@GetMapping("/redirect")
+	public ApiResult redirectForLogin() {
+		ApiResult apiResult = ApiResult.success();
+		apiResult.setMessage("please login.");
+		return apiResult;
+	}
+
+	@GetMapping("/unAuthor")
+	public ApiResult unAuthorization() {
+		ApiResult apiResult = ApiResult.success();
+		apiResult.setMessage("do not hava this permission");
+		return apiResult;
+	}
 
 	@PostMapping("/login")
 	public ApiResult login(@RequestParam(required = true, name = "loginName") String loginName,
@@ -50,21 +60,50 @@ public class UserController {
 			ApiResult apiResult = ApiResult.failed();
 			return apiResult.setMessage(e.getMessage());
 		}
-		ServletRequestAttributes requestAttributes =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		HttpSession session = requestAttributes.getRequest().getSession();
-		session.setAttribute("test", "123");
+		/*
+		 * ServletRequestAttributes requestAttributes =
+		 * (ServletRequestAttributes) RequestContextHolder
+		 * .getRequestAttributes(); HttpSession session =
+		 * requestAttributes.getRequest().getSession();
+		 * session.setAttribute("test", "123");
+		 */
 		return ApiResult.success();
 	}
-	
-	@GetMapping("/info")
-	public ApiResult getInfo() {
-		ServletRequestAttributes requestAttributes =  (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+	@PostMapping("/logout")
+	public ApiResult logout() {
+		try {
+			SecurityUtils.getSubject().logout();
+		} catch (AuthenticationException e) {
+			// TODO Auto-generated catch block
+			log.error("login failed.", e);
+			ApiResult apiResult = ApiResult.failed();
+			return apiResult.setMessage(e.getMessage());
+		}
+		/*
+		 * ServletRequestAttributes requestAttributes =
+		 * (ServletRequestAttributes) RequestContextHolder
+		 * .getRequestAttributes(); HttpSession session =
+		 * requestAttributes.getRequest().getSession();
+		 * session.setAttribute("test", "123");
+		 */
+		return ApiResult.success();
+	}
+
+	@GetMapping("/check/permission")
+	public ApiResult checkPermission(@RequestParam(required = true, name = "permission") String permission) {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		try {
+			SecurityUtils.getSubject().checkPermission(permission);
+		} catch (AuthorizationException e) {
+			// TODO Auto-generated catch block
+			ApiResult apiResult = ApiResult.failed();
+			apiResult.setMessage("权限验证不通过");
+			return apiResult;
+		}
 		ApiResult apiResult = ApiResult.success();
-		HttpSession session = requestAttributes.getRequest().getSession();
-		log.debug(session.getId());
-		log.debug((String) session.getAttribute("test"));
 		return apiResult;
-		
 	}
 
 	@PostMapping("/register")

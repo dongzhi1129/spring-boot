@@ -2,8 +2,8 @@ server:
   port: 7001
 spring:
   redis:
-    host: 192.168.199.118
-    port: 6739
+    host: 172.22.34.32
+    port: 8099
     jedis:
       pool:
         max-active: 20
@@ -12,9 +12,10 @@ spring:
         max-idle: 10
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.199.118:53306/authority?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/authority?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&autoReconnect=true
     username: root
-    password: root
+    password: root  session:    timeout: 60
+    store-type: redis  application:    name: spring-cloud-authority
         
 mybatis:
   mapper-locations:

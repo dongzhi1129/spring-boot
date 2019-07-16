@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 		RoleExample roleExample = new RoleExample();
 		RoleExample.Criteria criteria2 = roleExample.createCriteria();
 		criteria2.andIdIn(userRoles.stream().map(elem -> {
-			return elem.getId();
+			return elem.getRoleId();
 		}).collect(Collectors.toList()));
 		return roleMapper.selectByExample(roleExample);
 	}

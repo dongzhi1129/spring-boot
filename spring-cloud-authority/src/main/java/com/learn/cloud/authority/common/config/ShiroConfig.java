@@ -30,12 +30,12 @@ public class ShiroConfig {
 		return securityManager;
 	}
 
-	@Bean
+	@Bean("shiroFilter")
 	public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
 		shiroFilter.setSecurityManager(securityManager);
-		shiroFilter.setLoginUrl("/login");
-		shiroFilter.setUnauthorizedUrl("/");
+		shiroFilter.setLoginUrl("/authority/redirect");
+		shiroFilter.setUnauthorizedUrl("/authority/unAuthor");
 
 		Map<String, String> filterMap = new LinkedHashMap<>();
 		filterMap.put("/swagger/**", "anon");
@@ -43,7 +43,10 @@ public class ShiroConfig {
 		filterMap.put("/swagger-ui.html", "anon");
 		filterMap.put("/webjars/**", "anon");
 		filterMap.put("/swagger-resources/**", "anon");
-		filterMap.put("/register", "anon");
+		filterMap.put("/authority/register", "anon");
+		filterMap.put("/authority/login", "anon");
+		filterMap.put("/authority/logout", "anon");
+//		filterMap.put("/check/permission", "anon");
 
 		filterMap.put("/statics/**", "anon");
 		filterMap.put("/login.html", "anon");
