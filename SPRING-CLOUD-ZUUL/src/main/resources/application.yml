@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-cloud-gateway-zuulserver:  port: 7002
+zuul:
+  prefix: /api  routes:    spring-cloud-authority:
+     path: /authority/**
+     url: http://localhost:7001/authority
+     custom-sensitive-headers: true
+    auto-judge-base:   
+     path: /model/**
+     url: http://localhost:7003/model
+     custom-sensitive-headers: true
+    
+       
